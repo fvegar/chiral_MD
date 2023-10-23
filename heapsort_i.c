@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 //#include "mkl.h" // uncomment if INTEL MKL installed;
-
+ 
 /******************************************************************/
 // USAGE: ./a.out number1 number2 number3
 // number1: how many numbers to sort
