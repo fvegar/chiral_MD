@@ -33,6 +33,8 @@ main.o: ../main.c ../params.h
 gaussian.o: ../gaussian.c ../params.h 
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../gaussian.c 
 
+gamma_distr.o: ../gamma_distr.c ../params.h 
+	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../gamma_distr.c 
 	 
 all: CHIRAL $(OBJS)
 
