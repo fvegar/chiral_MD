@@ -52,3 +52,4 @@
 /* extern float *r; */
 
 extern int gaussian(int gseed, int gn);
+extern int gamma_distr(int gmseed, int gmn);
