@@ -51,5 +51,5 @@
 /* extern const int npart; */
 /* extern float *r; */
 
-extern int gaussian(int gseed, int gn);
-extern int gamma_distr(int gmseed, int gmn);
+extern int gaussian(int gseed, int gn, float *gv);
+extern int gamma_distr(int gmseed, int gmn, float *gmv);
