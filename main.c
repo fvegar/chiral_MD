@@ -9,7 +9,9 @@
 int main( int argc,  char *argv[] ){
   // distr gaussiana
 
-  gaussian(atoi(argv[1]), atoi(argv[2]));
+  gaussian( atoi(argv[1]), atoi(argv[2]) );
+
+  gamma_distr( atoi(argv[1]), atoi(argv[2]) );
   
   return 0;
   
