@@ -62,7 +62,7 @@ void init_random_numbers(double darr[], int n, int SEED){
 /* ****************  MAIN PROGRAM  *************** */
 /***************************************************/
 
-int main( int argc, char *argv[]  ){
+int heapsort_f( int argc, char *argv[]  ){
 
   /* ********* VARIABLES DEFINITIONS ********************************************************/
   int n = atoi(argv[1]);

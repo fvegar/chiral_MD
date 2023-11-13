@@ -18,21 +18,21 @@ int main( int argc,  char *argv[] ){
   x = (float*)mkl_malloc(npart*npart*sizeof(float),64);
   y = (float*)mkl_malloc(npart*npart*sizeof(float),64);
 
-  
   gaussian( seed, npart, vx);
 
   for (i=0; i< npart; i++){
 
-    printf("#%d: %6.3f\n", i, vx[i]);
+    printf("results for a gaussian distribution:\n\n");
+    printf("#%d (vx): %6.3f\n", i, vx[i]);
   
   }
 
-  gamma_distr( seed, npart, vx);
+  gamma_distr( seed, npart, vy);
 
-  //*v = (double)(*v);
   for (i=0; i< npart; i++){
 
-    printf("#%d: %6.3f\n", i, vx[i]);
+    printf("results for a gamma distribution:\n\n");
+    printf("#%d (vy): %6.3f\n", i, vy[i]);
   
   }
 
