@@ -62,39 +62,32 @@ void init_random_numbers(double darr[], int n, int SEED){
 /* ****************  MAIN PROGRAM  *************** */
 /***************************************************/
 
-int heapsort_f( int argc, char *argv[]  ){
+int heapsort_f(int n_heap, double *heap ){
 
   /* ********* VARIABLES DEFINITIONS ********************************************************/
-  int n = atoi(argv[1]);
-  int range = atoi(argv[2]);
-  int SEED = atoi(argv[3]);
-  double col_list[n]; // define variable length array: colision list 
   int i; // iteration variable
-  char randstate[2048];
 
   void iSWAP(double *a, double *b);
   void report(double darrr[], int nn);
   
   /* **** PROGRAM START ********************************************************************/
 
-  init_random_numbers(col_list, n, SEED);
-  report(col_list, n);
-
+  //report(heap, n_heap);
   
   /* CREATE HEAP STRUCTURE by 'demoting' */
-  for (i=n/2-1; i>=0 ;i--) demote(col_list, i, n-1);
+  for (i=n_heap/2-1; i>=0 ;i--) demote(heap, i, n_heap-1);
   // demoting works by comparison of heap element with it(s) sibling(s)
   // NOTE: the last element with siblings is always n/2-1; n being the array (future heap) size
 
 
   /* ORDER HEAP COMPLETELY by promoting final elements sequentially and then demoting them */
-  for (i=n-1; i>0; i--){
-    iSWAP(&col_list[0], &col_list[i]); // first swap, putting at the end of array the element on top
-    demote(col_list, 0, i-1);
+  for (i=n_heap-1; i>0; i--){
+    iSWAP(&heap[0], &heap[i]); // first swap, putting at the end of array the element on top
+    demote(heap, 0, i-1);
   }
-  report(col_list, n);
+  report(heap, n_heap);
 
-  printf("\nended %s program\n\n\a", argv[0]);
+  printf("\nended heap program\n\n\a");
   return 0;
   
 }

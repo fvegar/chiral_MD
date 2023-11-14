@@ -51,5 +51,9 @@
 /* extern const int npart; */
 /* extern float *r; */
 
-extern int gaussian(int gseed, int gn, float *gv);
-extern int gamma_distr(int gmseed, int gmn, float *gmv);
+extern int gaussian(int gseed, int gn, double *gv, int ga, int gsigma);
+extern int gamma_distr(int gmseed, int gmn, double *gmv, double gmalpha, double gma, double gmbeta);
+extern int heapsort_f( int n_heap, double *heap );
+extern int heapsort_i( int n_heap, int *heap );
+extern int unif_f( int useed, int un, double *uv, int u_init, int u_final);
+extern int unif_i( int uiseed, int uin, double *uiv, int ui_init, int ui_final);
