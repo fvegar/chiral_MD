@@ -1,6 +1,4 @@
 #include "params.h"
-#include <mkl.h>
-#include <stdio.h>
 
 // *gmv : pointer to arr passed to gamma_distr; returns array gmv
 // gmn: dimension of array passed

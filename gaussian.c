@@ -1,6 +1,4 @@
 #include "params.h"
-#include <mkl.h>
-#include <stdio.h>
 
 
 int gaussian( int gseed, int gn, double *gv, int ga, int gsigma){

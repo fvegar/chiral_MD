@@ -3,13 +3,17 @@
 #include <stdio.h>
 #include <errno.h>
 #include<stdlib.h>
-#include<fcntl.h>
-#include<sys/stat.h>
-#include<time.h>
- 
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include <string.h>
+
 #include "mkl_vsl.h"
 #include "mkl_vml.h" 
- 
+#include "mkl.h" 
+
 
 //************************************************************
 //*       PARAMETROS DEFINIDOS EN LA SIMULACION
@@ -26,30 +30,21 @@
 #define dr2 2.*r2 /* 2 x sqrt(2) */
 
 
+// radio de las particulas
+#define R 1.
+// tamano del sistema
+#define LX 10*R //112.09982432795857*R
+#define LY LX //112.09982432795857*R
+// tamano del sistema menos un radio (para situar las particulas)
+#define LXR  LX*0.5-R
+#define LYR  LY*0.5-R
+// fraccion de empaquetamiento
+//#define nu = 0.72
+
 
 //************************************************************
-//*       VARIABLES MKL-VSL 
+//*       EVENT-DRIVEN ALGORITHM FUNCTIONS (Intel MKL-based)
 //************************************************************
-
-
-// declaracion de variables lazo de numeros aleatorios, 
-// distr unif. continua
-/* extern	int uerrcode; /\* parametro de error asociado *\/ */
-/* extern  VSLStreamStatePtr ustream; */
-/* // distr uniforme discreta  */
-/* extern	int ierrcode;  */
-/* extern  VSLStreamStatePtr istream; */
-/* // distr gaussiana continua */
-/* extern	int gerrcode; */
-/* extern  VSLStreamStatePtr gstream; */
-/* // distr rayleighiana continua */
-/* extern	int derrcode; */
-/* extern  VSLStreamStatePtr raystream; */
-/* // distr gamma continua */
-
-/* // number of particles */
-/* extern const int npart; */
-/* extern float *r; */
 
 extern int gaussian(int gseed, int gn, double *gv, int ga, int gsigma);
 extern int gamma_distr(int gmseed, int gmn, double *gmv, double gmalpha, double gma, double gmbeta);

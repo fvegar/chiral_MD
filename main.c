@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include "mkl_vsl.h"
-#include "mkl_vml.h" 
-#include "mkl.h" 
 #include "params.h"
 
 //int gaussian( int gseed, int gn);
