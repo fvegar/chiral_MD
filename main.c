@@ -25,6 +25,9 @@ int main( int argc,  char *argv[] ){
 
   gamma_distr( seed, npart, vy, 2., 0., 2.);
 
+  vy[0] = INFINITY;
+  vy[2] = INFINITY;
+  
   printf("results for a gamma distribution:\n\n");
   for (i=0; i< npart; i++){
 
@@ -33,7 +36,7 @@ int main( int argc,  char *argv[] ){
   }
 
 
-  heapsort_f(npart, vy);
+  hash_heapsort_f(npart, vy);
 
   printf("results for the heaped gamma distribution:\n\n");
       
