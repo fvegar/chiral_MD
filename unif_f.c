@@ -1,8 +1,8 @@
 #include "params.h"
 
-// *gmv : pointer to arr passed to gamma_distr; returns array gmv
-// gmn: dimension of array passed
-// gmseed: seed of distr generator
+// *uv : pointer to arr passed to unif_f; returns array uv
+// un: dimension of array passed
+// useed: seed of distr generator
 int unif_f( int useed, int un, double *uv, int u_init, int u_final){
 
   // rand uniform distribution, continuous version
@@ -15,7 +15,7 @@ int unif_f( int useed, int un, double *uv, int u_init, int u_final){
   mkl_peak_mem_usage(MKL_PEAK_MEM_ENABLE);
 
   printf("\n UNIFORM DISTRIBUTION \n");
-  // initialize Basic Random Number Generator vsRngGamma( method, stream, n, r, alpha, a, beta );
+  // initialize Basic Random Number Generator. here: ARS5
   str_err_code = vslNewStream(&ustream, VSL_BRNG_ARS5, useed);
   printf("error status for rand str generation: %d\n", str_err_code);
   // create distribution function
@@ -24,6 +24,9 @@ int unif_f( int useed, int un, double *uv, int u_init, int u_final){
 
   str_err_code = vslDeleteStream(&ustream); 
   printf("error status for rand str deletion: %d\n", str_err_code);
+
+  /* printf("\nPeak memory allocated by Intel MKL memory allocator after reset of peak memory counter %d bytes\n",
+     mkl_peak_mem_usage(MKL_PEAK_MEM)); */
   
   return 0;
   

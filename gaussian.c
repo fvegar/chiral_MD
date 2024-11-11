@@ -15,6 +15,7 @@ int gaussian( int gseed, int gn, double *gv, int ga, int gsigma){
   str_err_code = vslNewStream(&gstream, VSL_BRNG_PHILOX4X32X10, gseed);
   printf("\n GAUSSIAN DISTRIBUTION \n");
   printf("error status for rand str generation: %d\n", str_err_code);
+  // create distribution function
   fun_err_code = vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER2, gstream, gn, gv, ga, gsigma );
   printf("error status for rand distr function generation: %d\n", fun_err_code);
 
