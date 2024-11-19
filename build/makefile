@@ -20,7 +20,7 @@ CFLAGS=-c -g -O3  -DMKL_ILP64 #-fcolor-diagnostics
 
 LDFLAGS=-L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
 ### Objetos a compilar
-OBJS= main.o gaussian.o gamma_distr.o unif_f.o hash_heapsort_f.o collision.o
+OBJS= main.o gaussian.o gamma_distr.o unif_f.o heapsort_f.o collision.o
 ##SCRS=
 
 CHIRAL: $(OBJS)
@@ -39,8 +39,8 @@ gamma_distr.o: ../gamma_distr.c ../params.h
 unif_f.o: ../unif_f.c ../params.h
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../unif_f.c
 
-hash_heapsort_f.o: ../hash_heapsort_f.c ../params.h 
-	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../hash_heapsort_f.c
+heapsort_f.o: ../heapsort_f.c ../params.h 
+	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../heapsort_f.c
 
 collision.o: ../collision.c ../params.h 
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../collision.c 
