@@ -1,5 +1,5 @@
 ### Nombre del compilador
-CC=icx
+CC=clang
 
 # librerias para el enlazador
 #mkl version 2011
@@ -9,7 +9,7 @@ LPMKL=/opt/intel/oneapi/mkl/lastest/lib/intel64
 IMKL=/opt/intel/oneapi/mkl/latest/include # version 2023
 
 ### Opciones del compilador
-CFLAGS=-c -g -O3  -DMKL_ILP64 #-fcolor-diagnostics
+CFLAGS=-c -g -O3  -DMKL_ILP64 -fcolor-diagnostics
 
 #para mkl 11.1, estatico, enteros de 32 bits
 #LDFLAGS=-static -L$(LPMKL) -I$(IMKL) -Wl,--start-group $(LPMKL)/libmkl_intel_lp64.a $(LPMKL)/libmkl_intel_thread.a $(LPMKL)/libmkl_core.a -Wl,--end-group -openmp -lpthread
@@ -27,22 +27,22 @@ CHIRAL: $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o CHIRAL
 #	$(CC) -o CHIRAL -static $(OBJS)
 
-main.o: ../main.c ../params.h
+main.o: ../main.c ../params.h ../protos.h 
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../main.c
 
-gaussian.o: ../gaussian.c ../params.h 
+gaussian.o: ../gaussian.c ../params.h ../protos.h 
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../gaussian.c 
 
-gamma_distr.o: ../gamma_distr.c ../params.h 
+gamma_distr.o: ../gamma_distr.c ../params.h ../protos.h 
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../gamma_distr.c
 
-unif_f.o: ../unif_f.c ../params.h
+unif_f.o: ../unif_f.c ../params.h ../protos.h 
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../unif_f.c
 
-heapsort_f.o: ../heapsort_f.c ../params.h 
+heapsort_f.o: ../heapsort_f.c ../params.h ../protos.h 
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../heapsort_f.c
 
-collision.o: ../collision.c ../params.h 
+collision.o: ../collision.c ../params.h ../protos.h 
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../collision.c 
 	 
 all: CHIRAL $(OBJS)
