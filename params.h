@@ -30,29 +30,26 @@
 #define dr2 2.*r2 /* 2 x sqrt(2) */
 
 
-// radio de las particulas
+// radius of particles
 #define R 1.
-// tamano del sistema
+// system size
 #define LX 10*R //112.09982432795857*R
 #define LY LX //112.09982432795857*R
-// tamano del sistema menos un radio (para situar las particulas)
+// system size minus radius of particles
 #define LXR  LX*0.5-R
 #define LYR  LY*0.5-R
 // fraccion de empaquetamiento
 //#define nu = 0.72
+#define alpha 0.999
 
+extern double *w, *vx, *vy, *x, *y, *w;
+//extern int *hash_ij;
+// structure template 
+struct collisions { 
+    double ct; 
+    int p1; 
+    int p2; 
+}; 
+extern struct collisions *heap;
 
-//************************************************************
-//*       EVENT-DRIVEN ALGORITHM FUNCTIONS (Intel MKL-based)
-//************************************************************
-extern double *vx, *vy, *x, *y, *w;
-
-
-extern int gaussian(int gseed, int gn, double *gv, int ga, int gsigma);
-extern int gamma_distr(int gmseed, int gmn, double *gmv, double gmalpha, double gma, double gmbeta);
-extern int hash_heapsort_f( int n_heap, double *heap );
-//extern int heapsort_f( int n_heap, double *heap );
-extern int heapsort_i( int n_heap, int *heap );
-extern int unif_f( int useed, int un, double *uv, int u_init, int u_final);
-extern int unif_i( int uiseed, int uin, double *uiv, int ui_init, int ui_final);
-extern double tcol(int i, int j );
+extern int Ncol, Npairs;

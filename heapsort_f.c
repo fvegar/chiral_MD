@@ -1,40 +1,44 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-//#include "mkl.h" // uncomment if INTEL MKL installed;
+#include "params.h"
+#include "protos.h"
+
 
 /******************************************************************/
-// USAGE: ./a.out number1 number2 number3
-// number1: how many numbers to sort
-// number2: range of values of those figures
-// number3: seed of the random generator
+// darr: array of values to heapify
+// ij: boss to potentially demote
+// r: range of values over which demote is performed
 /******************************************************************/
-
 
 
 /******************************************************************/
 // DEMOTE FUNCTION, for promoting greater sibblings in the heap * */
 /******************************************************************/
-void demote(double darr[], int i, int r ){
+int demote(struct collisions *darr, int i, int r){
 
-  int j, ikeep;
-  double darr_demote;
-
+  int i_sibling, i_keep;
+  struct collisions darr_keep;
   
-  darr_demote = darr[i];
-  ikeep = i;
-  j = ikeep*2+1;
+  darr_keep = darr[i];
+  i_keep = i; // safe copy value and index of current boss
+  i_sibling = 2 * i + 1; // in a heap, siblings are always 2 * i + 1 and 2 * i + 2 
     
-  while(j <= r){
-    if (j < r && darr[j] < darr[j+1]) j++; // compare only to the greater sibling
-    if (darr_demote >= darr[j]) break ; // if it's already the boss: stop at this level & continue
-    darr[ikeep] = darr[j]; // if it's not, promote its better sibling
-    ikeep = j; // continue testing if it's now in its level
-    j = 2*j+1; // next level is always 2*j+1
-  }     
-  
-  darr[ikeep] = darr_demote; // demote element
+  while(i_sibling <= r){
+    if (i_sibling < r && darr[i_sibling].ct < darr[i_sibling+1].ct) i_sibling++; // compare only to the greater sibling
+    if (darr_keep.ct >= darr[i_sibling].ct) break ; // if it's already the boss: stop at this level & continue
+    darr[i_keep] = darr[i_sibling]; // if it's not, promote its better sibling
+    i_keep = i_sibling; // continue testing if it's now in its level
+    i_sibling = 2 * i_sibling + 1; // next level is always 2 * current level +1
+  }
+  darr[i_keep] = darr_keep; // demote element, if i_keep was updated (demoted); if not, does nothing
+
+  return 0; // THIS IS THE HASH LINE
+
 } 
+/******************************************************************/
+
+
 
 /* **************  SERVICE INLINE FUNCTIONS ************* */
 // **** iSWAP(int address, int address) **** swap two elements in an array (of integers)
@@ -42,54 +46,50 @@ void demote(double darr[], int i, int r ){
 static inline void iSWAP(double *a, double *b) {
   double T=*a;*a=*b;*b=T;
 }
-
-/* **** report() **** print on screen the array in its current state */
-static inline void report(double darr[], int n){
-  int j;
-  for (j=0; j< n; j++) printf("%g\n", darr[j]); printf("\n\n\n");// print result
+static inline void iSWAP_int(int *ia, int *ib) {
+  int iT=*ia;*ia=*ib;*ib=iT;
 }
-
-/* ****** init_random_numbers() **** create array of integer random numbers to order  */ 
-void init_random_numbers(double darr[], int n, int SEED){
-  int j;
-  srand48(SEED); // integer random seed according to time (so that in every run the random squence changes)
-  //initstate((unsigned int)(SEED), randstate, 128); // same but for random base function
-  for (j=0;j<n;j++) darr[j] = drand48(); // save test array as collision list
-}
+/******************************************************************/
 
 
 /***************************************************/
 /* ****************  MAIN PROGRAM  *************** */
 /***************************************************/
 
-int heapsort_f(int n_heap, double *heap ){
-
-  /* ********* VARIABLES DEFINITIONS ********************************************************/
-  int i; // iteration variable
-
-  void iSWAP(double *a, double *b);
-  void report(double darrr[], int nn);
+int heapsort_f(int n_heap, struct collisions *heap ){
+  // n_heap: should be npart*npart in the case of MD with npart particles
   
+  /* ********* VARIABLES DEFINITIONS ********************************************************/
+  int k; // iteration variable
+  // i: ij hash index ( j + i*(N-1) ) of potential collision pair,
+  // running from 0 to npart*npart for MD with npart particles
+  
+  //int hash_ij[n_heap];
+    
+  void iSWAP(double *a, double *b);
+  void iSWAP_int(int *ia, int *ib);
+  
+
   /* **** PROGRAM START ********************************************************************/
 
-  //report(heap, n_heap);
-  
-  /* CREATE HEAP STRUCTURE by 'demoting' */
-  for (i=n_heap/2-1; i>=0 ;i--) demote(heap, i, n_heap-1);
+  /* CREATE HEAP STRUCTURE and bossify among siblings, by left-demoting */
+  for (k=n_heap/2-1; k>=0 ;k--)  demote(heap, k, n_heap-1);
   // demoting works by comparison of heap element with it(s) sibling(s)
   // NOTE: the last element with siblings is always n/2-1; n being the array (future heap) size
 
-
-  /* ORDER HEAP COMPLETELY by promoting final elements sequentially and then demoting them */
-  for (i=n_heap-1; i>0; i--){
-    iSWAP(&heap[0], &heap[i]); // first swap, putting at the end of array the element on top
-    demote(heap, 0, i-1);
+      
+  /* ORDER HEAP COMPLETELY by promoting final elements sequentially, by right-demoting them */
+  for (k=n_heap-1; k>0; k--){
+    iSWAP(&heap[0].ct, &heap[k].ct); // first swap, putting at the end of array the element on top
+    iSWAP_int(&heap[0].p1, &heap[k].p1);
+    iSWAP_int(&heap[0].p2, &heap[k].p2);
+    demote(heap, 0, k-1);
   }
-  report(heap, n_heap);
-
+  
   printf("\nended heap program\n\n\a");
   return 0;
   
 }
+/******************************************************************/
 
 // NOTE: 'demoting' is defined as the opposite of promoting

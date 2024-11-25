@@ -1,5 +1,5 @@
 ### Nombre del compilador
-CC=clang
+CC=icx
 
 # librerias para el enlazador
 #mkl version 2011
@@ -20,7 +20,7 @@ CFLAGS=-c -g -O3  -DMKL_ILP64 -fcolor-diagnostics
 
 LDFLAGS=-L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
 ### Objetos a compilar
-OBJS= main.o gaussian.o gamma_distr.o unif_f.o heapsort_f.o collision.o
+OBJS= main.o gaussian.o gamma_distr.o unif_f.o heapsort_f.o collision.o update.o
 ##SCRS=
 
 CHIRAL: $(OBJS)
@@ -43,7 +43,9 @@ heapsort_f.o: ../heapsort_f.c ../params.h ../protos.h
 	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../heapsort_f.c
 
 collision.o: ../collision.c ../params.h ../protos.h 
-	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../collision.c 
+	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../collision.c
+update.o: ../update.c ../params.h ../protos.h
+	$(CC) $(CFLAGS) -I"${MKLROOT}/include" ../update.c
 	 
 all: CHIRAL $(OBJS)
 

@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include "params.h"
+#include "protos.h"
+
 //#include "mkl.h" // uncomment if INTEL MKL installed;
  
 /******************************************************************/
